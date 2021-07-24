@@ -64,10 +64,10 @@ sc <- spark_connect(master = "local")
 
 #read parquet files
 
-drive <- spark_read_parquet(sc, "drive", "Challenges/data/data/drive")
-trip <- spark_read_parquet(sc, "trip", "Challenges/data/data/trip")
-weather <- spark_read_parquet(sc, "weather", "Challenges/data/data/weather")
-accel <- spark_read_csv(sc, "accel", "Challenges/data/drive_features.csv")
+drive <- spark_read_parquet(sc, "drive", "data/drive")
+trip <- spark_read_parquet(sc, "trip", "data/trip")
+weather <- spark_read_parquet(sc, "weather", "data/weather")
+accel <- spark_read_csv(sc, "accel", "data/drive_features.csv")
 
 #merge spark tables
 
