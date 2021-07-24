@@ -205,6 +205,9 @@ preds = predict(model, datasets$testData)
 
 # Evaluate the performance of the model on test data
 # Pearson Correlation
-evaluateModel(test$aggressiveness_score, preds)
+cat("test-r:", evaluateModel(test$aggressiveness_score, preds))
 # RMSE
-rmse(test$aggressiveness_score, preds)
+cat("test-rmse:", rmse(test$aggressiveness_score, preds))
+
+# Save the model
+saveRDS(model, "model.rds")
