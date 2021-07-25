@@ -50,7 +50,7 @@ trainModel <- function(df) {
   watchlist <- list(train = datasets$trainData, eval = datasets$evalData)
   
   # Train the model
-  model = xgb.train(
+  model <- xgb.train(
     nrounds = 1000,
     params = paramxgBoost,
     data = datasets$trainData,
@@ -61,7 +61,7 @@ trainModel <- function(df) {
   )
   
   # Generate predictions for test data
-  preds = predict(model, datasets$testData)
+  preds <- predict(model, datasets$testData)
   
   # Evaluate the performance of the model on test data
   # Pearson Correlation
@@ -74,13 +74,13 @@ trainModel <- function(df) {
 
 runModelTraining <- function() {
   # Ingest data
-  df = loadData()
+  df <- loadData()
   
   # Feature engineering
-  df = processFeatures(df)
+  df <- processFeatures(df)
   
   # Train the model
-  model = trainModel(df)
+  model <- trainModel(df)
   
   # Save the trained model
   saveRDS(model, 'model.rds')
