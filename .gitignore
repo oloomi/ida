@@ -39,10 +39,14 @@ vignettes/*.pdf
 .Renviron
 
 # pkgdown site
-docs/
+#docs/
 
 # translation temp files
 po/*~
 
+# RStudio and custom directories
 .DS_Store
 data/*
+logs/
+*.log
+*.rds
