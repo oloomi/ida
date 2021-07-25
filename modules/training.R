@@ -6,9 +6,9 @@ library(dplyr)
 library(splitTools)
 library(Metrics)
 
-source('code/data_ingestion.R')
-source('code/data_util.R')
-source('code/feature_engineering.R')
+source('modules/data_ingestion.R')
+source('modules/data_util.R')
+source('modules/feature_engineering.R')
 
 # Returns Pearson Correlation between actuals and predictions
 evaluateModel <- function(actuals, preds) {
