@@ -3,13 +3,13 @@
 
 library("azuremlsdk")
 
-ws <- get_workspace(
-  name = workspace_name ,
-  subscription_id = subscription_id,
-  resource_group = resource_group_name
-)
+# ws <- get_workspace(
+#   name = workspace_name ,
+#   subscription_id = subscription_id,
+#   resource_group = resource_group_name
+# )
 
-# ws <- load_workspace_from_config()
+ws <- load_workspace_from_config()
 
 # Define estimator
 est <- estimator(
