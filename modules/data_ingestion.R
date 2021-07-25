@@ -3,8 +3,9 @@ library(DBI)
 library(data.table)
 library(xgboost)
 library(dplyr)
+library(glue)
 
-loadData <- function() {
+loadData <- function(vehicle_id = NULL, trip_id = NULL) {
   # Create Spark connection
   sc <- spark_connect(master = "local")
   
@@ -15,9 +16,7 @@ loadData <- function() {
   accel <- spark_read_csv(sc, "accel", "data/drive_features.csv")
   
   # Merge Spark tables
-  df <- dbGetQuery(
-    sc,
-    " WITH temp_trip AS
+  query = " WITH temp_trip AS
                  (SELECT a.vehicle_id, a.trip_id
                   , min(a.datetime) as min_time
                   , max(a.datetime) as max_time
@@ -52,13 +51,19 @@ loadData <- function() {
                   , a.ft_sum_hard_brakes_10_flg_val
                   , a.ft_sum_hard_brakes_3_flg_val
                 FROM accel a, temp_trip b
-                WHERE a.trip_id = b.trip_id
-                 "
-  )
+                WHERE a.trip_id = b.trip_id"
+  
+  # In prediction, add given vehicle id and trip id to where clause 
+  vehicle_clause <- " AND b.vehicle_id = {vehicle_id}"
+  trip_clause <- " AND b.trip_id = '{trip_id}'"
+  if(!is.null(vehicle_id))
+    query <- paste(query, glue(vehicle_clause))
+  if(!is.null(trip_id))
+    query <- paste(query, glue(trip_clause))
+  
+  df <- dbGetQuery(sc, query)
   
   spark_disconnect(sc)
   
   return(df)
 }
-
-
