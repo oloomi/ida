@@ -3,9 +3,11 @@ source('modules/data_util.R')
 source('modules/feature_engineering.R')
 
 runPrediction <- function(vehicle_id = NULL,
-                          trip_id = NULL) {
+                          trip_id = NULL,
+                          envr = "dev") {
+  
   # Load data for the given vehicle's trip
-  df <- loadData(vehicle_id, trip_id)
+  df <- loadData(vehicle_id, trip_id, envr)
   
   # Feature engineering
   df <- processFeatures(df)

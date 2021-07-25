@@ -1,0 +1,5 @@
+spark_cluster_master: "local"
+drive_data_path: "data/drive"
+trip_data_path: "data/trip"
+weather_data_path: "data/weather"
+accel_data_path: "data/drive_features.csv"

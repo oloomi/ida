@@ -4,16 +4,21 @@ library(data.table)
 library(xgboost)
 library(dplyr)
 library(glue)
+library(yaml)
 
-loadData <- function(vehicle_id = NULL, trip_id = NULL) {
+loadData <- function(vehicle_id = NULL, trip_id = NULL, envr = "dev") {
+  
+  # Read config file
+  config <- read_yaml(glue("config/{envr}.yaml"))
+  
   # Create Spark connection
-  sc <- spark_connect(master = "local")
+  sc <- spark_connect(master = config$spark_cluster_master)
   
   # Read Parquet files
-  drive <- spark_read_parquet(sc, "drive", "data/drive")
-  trip <- spark_read_parquet(sc, "trip", "data/trip")
-  weather <- spark_read_parquet(sc, "weather", "data/weather")
-  accel <- spark_read_csv(sc, "accel", "data/drive_features.csv")
+  drive <- spark_read_parquet(sc, "drive", config$drive_data_path)
+  trip <- spark_read_parquet(sc, "trip", config$trip_data_path)
+  weather <- spark_read_parquet(sc, "weather", config$weather_data_path)
+  accel <- spark_read_csv(sc, "accel", config$accel_data_path)
   
   # Merge Spark tables
   query = " WITH temp_trip AS

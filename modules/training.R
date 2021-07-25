@@ -72,9 +72,9 @@ trainModel <- function(df) {
   return(model)
 }
 
-runModelTraining <- function() {
+runModelTraining <- function(envr = "dev") {
   # Ingest data
-  df <- loadData()
+  df <- loadData(envr = envr)
   
   # Feature engineering
   df <- processFeatures(df)
