@@ -1,0 +1,20 @@
+variables:
+- ${{if eq(variables['build.SourceBranchName'], 'main')}}:
+    - group: workspace-dev
+
+trigger:
+- main
+
+pool:
+  vmImage: 'Ubuntu-18.04'
+
+steps:
+- task: RunRScript@0
+  displayName: 'Install R packages'
+  inputs:
+    scriptPath: requirements.R
+
+- task: RunRScript@0
+  displayName: 'Run training and deploy to ACI'
+  inputs:
+    scriptPath: pipelines/aml_training_inference.R
