@@ -49,10 +49,15 @@ deployment_config <- aci_webservice_deployment_config(cpu_cores = 1,
                                                       memory_gb = 1)
 
 # Deploy the web service
-service_name <- paste0('aciwebservice-', sample(1:100, 1, replace=TRUE))
+service_name <- 'ida-aciwebservice-1'
 service <- deploy_model(ws, 
                         service_name, 
                         list(model), 
                         inference_config, 
                         deployment_config)
 wait_for_deployment(service, show_output = TRUE)
+
+# Test the web service
+service <- get_webservice(ws, service_name)
+# ToDo: create a sample df for testing inference
+predicted_score <- invoke_webservice(service, toJSON(sample_df))
